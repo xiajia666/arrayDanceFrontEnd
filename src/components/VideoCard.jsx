@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MessageCircle, Share2 } from 'lucide-react'; // 需要安装 lucide-react
+import { Heart, MessageCircle, Share2 } from 'lucide-react';
 
 const VideoCard = ({ videoSrc, userName, description }) => {
     return (
@@ -13,18 +13,18 @@ const VideoCard = ({ videoSrc, userName, description }) => {
                 style={styles.video}
             ></video>
 
-            {/* 右侧按钮栏 */}
+            {/* 右下角按钮栏 */}
             <div style={styles.rightBar}>
                 <div style={styles.iconContainer}>
-                    <Heart size={32} color="white" />
+                    <Heart size={28} color="white" />
                     <span style={styles.iconText}>123K</span>
                 </div>
                 <div style={styles.iconContainer}>
-                    <MessageCircle size={32} color="white" />
+                    <MessageCircle size={28} color="white" />
                     <span style={styles.iconText}>456</span>
                 </div>
                 <div style={styles.iconContainer}>
-                    <Share2 size={32} color="white" />
+                    <Share2 size={28} color="white" />
                     <span style={styles.iconText}>Share</span>
                 </div>
             </div>
@@ -37,12 +37,12 @@ const VideoCard = ({ videoSrc, userName, description }) => {
     );
 };
 
-// 简单内联样式
+// 横屏样式
 const styles = {
     container: {
         position: 'relative',
-        width: '360px',
-        height: '640px',
+        width: '360px',   // 宽度更大
+        height: '720px',  // 高度更小
         overflow: 'hidden',
         borderRadius: '16px',
         backgroundColor: 'black',
@@ -54,10 +54,10 @@ const styles = {
     },
     rightBar: {
         position: 'absolute',
-        right: '10px',
-        bottom: '100px',
+        right: '20px',
+        bottom: '20px',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row', // 横向排布按钮
         gap: '20px',
     },
     iconContainer: {
@@ -68,12 +68,12 @@ const styles = {
     },
     iconText: {
         marginTop: '4px',
-        fontSize: '14px',
+        fontSize: '12px',
         color: 'white',
     },
     desc: {
         position: 'absolute',
-        left: '10px',
+        left: '20px',
         bottom: '20px',
         color: 'white',
         fontSize: '16px',
