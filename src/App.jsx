@@ -7,27 +7,27 @@ function App() {
             <div style={{ display: "flex", gap: "20px" }}>
                 <VideoCard
                     videoSrc="/videos/sample.mp4"
-                    userName="小夏"
+                    userName="机甲"
                     description="这是我的第一个短视频"
                 />
                 <VideoCard
                     videoSrc="/videos/202599-164491.mp4"
-                    userName="美女跳舞"
+                    userName="机甲"
                     description="这是我的第二个短视频"
                 />
                 <VideoCard
                     videoSrc="/videos/202599-324623.mp4"
-                    userName="美女跳舞"
+                    userName="机甲"
                     description="这是我的第三个短视频"
                 />
                 <VideoCard
                     videoSrc="/videos/202599-326842.mp4"
-                    userName="美女跳舞"
+                    userName="机甲"
                     description="这是我的第四个短视频"
                 />
                 <VideoCard
                     videoSrc="/videos/202599-644025.mp4"
-                    userName="美女跳舞"
+                    userName="机甲"
                     description="这是我的第五个短视频"
                 />
             </div>
