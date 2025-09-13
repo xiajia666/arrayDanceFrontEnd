@@ -5,7 +5,7 @@ pipeline {
         REMOTE_HOST = '39.96.169.147'
         REMOTE_USER = 'root'
         REMOTE_DIR  = '/root/arrayDanceFrontEnd'
-        SERVER_PASSWORD = '您的服务器密码'
+        SERVER_PASSWORD = '985211xiaJIA1333'
     }
 
     stages {
