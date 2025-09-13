@@ -2,12 +2,10 @@ pipeline {
     agent any
 
     environment {
-        // 目标服务器信息
         REMOTE_HOST = '39.96.169.147'
         REMOTE_USER = 'root'
         REMOTE_DIR  = '/root/arrayDanceFrontEnd'
-        // 服务器密码（建议使用 Jenkins 凭据管理）
-        SERVER_PASSWORD = '985211xiaJIA1333@'
+        SERVER_PASSWORD = '您的服务器密码'
     }
 
     stages {
@@ -21,27 +19,31 @@ pipeline {
             steps {
                 script {
                     sh """
-                        # 使用 sshpass 进行密码登录
-                        sshpass -p '${SERVER_PASSWORD}' ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
-                            set -e
-                            echo ">>> 进入项目目录: ${REMOTE_DIR}"
-                            cd ${REMOTE_DIR}
-
-                            echo ">>> 拉取最新代码"
-                            git pull origin main
-
-                            echo ">>> 安装依赖"
-                            npm install
-
-                            echo ">>> 停止现有服务（如果存在）"
-                            pkill -f "npm run dev" || true
-                            sleep 2
-
-                            echo ">>> 启动前端服务"
-                            nohup npm run dev > frontend.log 2>&1 &
-
-                            echo ">>> 服务启动完成"
-                            echo "前端服务已在后台运行，查看日志: tail -f ${REMOTE_DIR}/frontend.log"
+                        # 使用 expect 自动化 SSH 登录和命令执行
+                        expect -c '
+                            set timeout 30
+                            spawn ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST}
+                            expect {
+                                "password:" {
+                                    send "${SERVER_PASSWORD}\\r"
+                                    exp_continue
+                                }
+                                "yes/no" {
+                                    send "yes\\r"
+                                    exp_continue
+                                }
+                                "# " {}
+                                "$ " {}
+                            }
+                            send "cd ${REMOTE_DIR}\\r"
+                            send "git pull origin main\\r"
+                            send "npm install\\r"
+                            send "pkill -f \\\"npm run dev\\\" || true\\r"
+                            send "sleep 2\\r"
+                            send "nohup npm run dev > frontend.log 2>&1 &\\r"
+                            send "echo \\\"✅ 部署完成！\\\"\\r"
+                            send "exit\\r"
+                            expect eof
                         '
                     """
                 }
