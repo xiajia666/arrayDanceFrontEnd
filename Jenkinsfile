@@ -21,28 +21,30 @@ pipeline {
         stage('Deploy and Build on Remote Server') {
             steps {
                 script {
-                    // 使用 SSH 登录远程服务器并执行构建
                     sshagent([SSH_CRED_ID]) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} << 'EOF'
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} '
                                 set -e
-                                echo '>>> 进入项目目录'
+                                echo ">>> 进入项目目录: ${REMOTE_DIR}"
                                 cd ${REMOTE_DIR}
 
-                                echo '>>> 拉取最新代码'
+                                echo ">>> 拉取最新代码"
                                 git pull origin main
 
-                                echo '>>> 安装依赖'
+                                echo ">>> 安装依赖"
                                 npm install
 
-                                echo '>>> 进入screen'
-                                screen -r arraydance
+                                echo ">>> 停止现有服务（如果存在）"
+                                pkill -f "npm run dev" || true
+                                sleep 2
 
-                                echo '>>> 构建前端项目'
-                                npm run dev
+                                echo ">>> 启动前端服务"
+                                # 使用 nohup 在后台运行，并输出日志到文件
+                                nohup npm run dev > frontend.log 2>&1 &
 
-                                echo '>>> 构建完成'
-                            EOF
+                                echo ">>> 服务启动完成，查看进程："
+                                ps aux | grep "npm run dev" | grep -v grep
+                            '
                         """
                     }
                 }
