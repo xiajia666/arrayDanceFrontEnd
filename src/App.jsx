@@ -28,7 +28,7 @@ function App() {
                 <VideoCard
                     videoSrc="/videos/202599-644025.mp4"
                     userName="机甲"
-                    description="这是我的第n个短视频"
+                    description="这是我的第nnn个短视频"
                 />
             </div>
 
